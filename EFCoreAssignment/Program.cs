@@ -92,18 +92,17 @@ static void InsertProductWithNewShop(AppDbContext dbContext)
     // TODO: Insert a new Product with a new Shop
     var shop = new Shop()
     {
-        Name = "Bethesda shop"
+        Name = "Battle net"
     };
 
     var product = new Product()
     {
-        Name = "Final Fantasy XIV",
-        ShopId = 8
+        Name = "Scoobydoo",
+        Shop = shop
     };
 
     using (dbContext)
     {
-        dbContext.Add(shop);
         dbContext.Add(product);
         dbContext.SaveChanges();
     }
