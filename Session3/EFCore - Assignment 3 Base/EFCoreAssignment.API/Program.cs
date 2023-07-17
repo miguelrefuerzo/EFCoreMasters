@@ -1,0 +1,53 @@
+using EFCoreAssignment.Data;
+using EFCoreAssignment.Data.Services;
+using Microsoft.EntityFrameworkCore;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("AppDbContext")
+        ?? throw new InvalidOperationException("Connection string 'AppDbContext' not found.")));
+
+// Add services to the container.
+
+builder.Services.AddControllers();
+
+//TODO register DbContext
+
+//TODO register DbContext initialiser
+builder.Services.AddScoped<AppDbContextInitialiser>();
+
+//TODO register product service
+builder.Services.AddTransient<IProductService, ProductService>();
+
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+
+    //TODO create new scoped service provider and run initialise and seed of AppDbContextInitialiser    
+    using (var scope = app.Services.CreateScope())
+    {
+        var initialiser = scope.ServiceProvider.GetRequiredService<AppDbContextInitialiser>();
+        await initialiser.InitialiseAsync();
+        await initialiser.SeedAsync();
+    }
+}
+
+
+// Configure the HTTP request pipeline.
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
