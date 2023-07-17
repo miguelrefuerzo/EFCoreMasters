@@ -16,15 +16,20 @@ namespace EFCoreAssignment.Data.Services
         public async Task<List<ProductDto>> GetProducts()
         {
             // TODO get products
-            var product = await _context.Products.ToListAsync();
-            return product.Select(p => new ProductDto(p.Id, p.Name, p.ShopId)).ToList();
+            var product = await _context.Products
+                .Select(p => new ProductDto(p.Id, p.Name, p.ShopId))
+                .ToListAsync();
+            return product;
         }
 
         public async Task<ProductDto> GetProduct(int id)
         {
             // TODO get product
-            var product = await _context.Products.FindAsync(id);
-            return new ProductDto(product.Id, product.Name, product.ShopId);
+            var product = await _context.Products
+                .Where(p => p.Id == id)
+                .Select(p => new ProductDto(p.Id, p.Name, p.ShopId))
+                .FirstOrDefaultAsync();
+            return product;
         }
 
         public async Task<int> CreateProduct(CreateProductDto productForCreation)
