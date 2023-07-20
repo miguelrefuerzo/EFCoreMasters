@@ -9,6 +9,7 @@ namespace InventoryAppEFCore.DataLayer.EfClasses
 {
     public class PriceOffer
     {
+        [Key]
         public int PriceOfferId { get; set; }
 
         public decimal NewPrice { get; set; }

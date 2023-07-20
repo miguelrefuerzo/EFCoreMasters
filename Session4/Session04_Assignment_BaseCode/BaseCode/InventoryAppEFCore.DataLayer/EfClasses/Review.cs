@@ -9,7 +9,11 @@ namespace InventoryAppEFCore.DataLayer.EfClasses
 {
     public class Review
     {
+        [Key]
         public int ReviewId { get; set; }
+
+        [MaxLength(50)]
+        [Required]
         public string VoterName { get; set; }
 
         public string Comment { get; set; }

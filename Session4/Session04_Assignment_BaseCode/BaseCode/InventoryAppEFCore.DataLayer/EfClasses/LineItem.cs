@@ -9,6 +9,7 @@ namespace InventoryAppEFCore.DataLayer.EfClasses
 {
     public class LineItem
     {
+        [Key]
         public int LineItemId { get; set; }
         public short NumOfProducts { get; set; }
         public decimal ProductPrice { get; set; }

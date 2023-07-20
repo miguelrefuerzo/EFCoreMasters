@@ -10,8 +10,11 @@ namespace InventoryAppEFCore.DataLayer.EfClasses
 {
     public class Supplier
     {
-        public int SupplierId { get; set; } 
+        [Key]
+        public int SupplierId { get; set; }
 
+        [MaxLength(50)]
+        [Required]
         public string Name { get; set; }
 
         public string Description { get; set; }
