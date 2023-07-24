@@ -34,7 +34,11 @@ namespace InventoryAppEFCore.DataLayer
                 .IsRequired();
             modelBuilder.Entity<Product>()
                 .Property<DateTime>("ReleaseDate");
-            
+            modelBuilder.Entity<Product>() //value conversion
+                .Property(p => p.IsDeleted)
+                .HasConversion<int>();
+
+
             //Client
             modelBuilder.Entity<Client>()
                 .HasKey(p => p.ClientId);
@@ -42,7 +46,10 @@ namespace InventoryAppEFCore.DataLayer
                 .Property(p => p.Name)
                 .HasMaxLength(50)
                 .IsRequired();
-            
+            modelBuilder.Entity<Client>() //value conversion
+                .Property(p => p.IsDeleted)
+                .HasConversion<int>();
+
             //ExcludeClass
             modelBuilder.Entity<ExcludeClass>()
                 .HasKey(p => p.Id);
