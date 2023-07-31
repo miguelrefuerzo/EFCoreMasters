@@ -37,7 +37,10 @@ namespace InventoryAppEFCore.DataLayer
             modelBuilder.Entity<Product>() //value conversion
                 .Property(p => p.IsDeleted)
                 .HasConversion<int>();
-
+            modelBuilder.Entity<Product>()
+                .HasMany(p => p.Tags)
+                .WithMany(p => p.Products)
+                .UsingEntity(p => p.ToTable("ProductTag"));
 
             //Client
             modelBuilder.Entity<Client>()
@@ -61,11 +64,18 @@ namespace InventoryAppEFCore.DataLayer
             //LineItem
             modelBuilder.Entity<LineItem>()
                 .HasKey(p => p.LineItemId);
+            modelBuilder.Entity<LineItem>()
+                .HasOne(p => p.SelectedProduct)
+                .WithOne()
+                .HasForeignKey<Product>(p => p.ProductId);
             
             //Order
             modelBuilder.Entity<Order>()
                 .HasKey(p => p.OrderId);
-
+            modelBuilder.Entity<Order>()
+                .HasMany(p => p.LineItems)
+                .WithOne()
+                .HasForeignKey(p => p.OrderId);
             
             //PriceOffer
             modelBuilder.Entity<PriceOffer>()
@@ -87,7 +97,6 @@ namespace InventoryAppEFCore.DataLayer
                 .HasMaxLength(50)
                 .HasField("_Name")
                 .IsRequired();
-
             
             //Tag
             modelBuilder.Entity<Tag>()

@@ -20,6 +20,7 @@ namespace InventoryAppEFCore.DataLayer.EfClasses
 
         public OrderStatus Status { get; set; }
 
+        [ForeignKey(nameof(Client))]
         public int ClientId { get; set; }
     }
 }
