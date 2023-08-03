@@ -1,3 +1,4 @@
+using AutoMapper;
 using InventoryAppEFCore.API;
 using InventoryAppEFCore.DataLayer;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddAutoMapper(typeof(AutoMapperClass));
+var mapperConfig = new MapperConfiguration(cfg =>
+{
+    cfg.AddProfile<AutoMapperClass>();
+});
 
 builder.Services.AddDbContext<InventoryAppEfCoreContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
