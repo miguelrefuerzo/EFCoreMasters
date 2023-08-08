@@ -12,6 +12,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAutoMapper(typeof(AutoMapperClass));
+
 var mapperConfig = new MapperConfiguration(cfg =>
 {
     cfg.AddProfile<AutoMapperClass>();
