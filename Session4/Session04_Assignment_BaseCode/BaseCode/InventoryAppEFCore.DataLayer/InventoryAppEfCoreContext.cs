@@ -41,6 +41,7 @@ namespace InventoryAppEFCore.DataLayer
                 .HasMany(p => p.Tags)
                 .WithMany(p => p.Products)
                 .UsingEntity(p => p.ToTable("ProductTag"));
+            modelBuilder.Entity<Product>().HasQueryFilter(p => !p.IsDeleted);
 
             //Client
             modelBuilder.Entity<Client>()
