@@ -98,10 +98,17 @@ namespace InventoryAppEFCore.DataLayer
                 .HasMaxLength(50)
                 .HasField("_Name")
                 .IsRequired();
-            
+
             //Tag
             modelBuilder.Entity<Tag>()
                 .HasKey(p => p.TagId);
+
+
+            //Session7 seed data
+            modelBuilder.Entity<Product>().HasData(
+                new { ProductId = 1, Name = "Product 1", IsDeleted = false },
+                new { ProductId = 2, Name = "Product 2", IsDeleted = false}
+                );
         }
 
     }
