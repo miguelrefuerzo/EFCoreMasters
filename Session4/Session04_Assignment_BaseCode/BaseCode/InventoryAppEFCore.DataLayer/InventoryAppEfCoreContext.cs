@@ -107,13 +107,33 @@ namespace InventoryAppEFCore.DataLayer
 
             //Session7 seed data
             modelBuilder.Entity<Client>().HasData(
-                new { ClientId = 1, Name = "Client 1", IsDeleted = false },
-                new { ClientId = 2, Name = "Client 2", IsDeleted = false},
-                new { ClientId = 3, Name = "Client 3", IsDeleted = false}
+                new { ClientId = 1, Name = "Client 1", FirstName = "Session", LastName = "8", IsDeleted = false },
+                new { ClientId = 2, Name = "Client 2", FirstName = "Session", LastName = "8", IsDeleted = false},
+                new { ClientId = 3, Name = "Client 3", FirstName = "Session", LastName = "8", IsDeleted = false}
                 );
 
             modelBuilder.Entity<Client>().ToTable("Client");
             modelBuilder.Entity<ClientView>().ToView("ClientView").HasNoKey();
+
+            //Session8 HasDefaultValue
+            modelBuilder.Entity<Order>()
+                .Property(x => x.DateOrderedUtc)
+                .HasDefaultValue(new DateTime(2023, 06, 28));
+
+            //HasDefaultValueSql
+            //modelBuilder.Entity<Order>()
+            //    .Property(x => x.DateOrderedUtc)
+            //    .HasDefaultValueSql("getutcdeate()");
+
+            //Computed Columns Persisted
+            modelBuilder.Entity<Client>()
+                .Property(p => p.Name)
+                .HasComputedColumnSql("[FirstName] + ' ' + [LastName]", stored: true);
+
+            //Computed Columns Dynamic
+            //modelBuilder.Entity<Client>()
+            //    .Property(p => p.Name)
+            //    .HasComputedColumnSql("[FirstName] + ' ' + [LastName]");
         }
 
     }

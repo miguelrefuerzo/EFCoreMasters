@@ -14,7 +14,9 @@ namespace InventoryAppEFCore.DataLayer.EfClasses
         [MaxLength(50)]
         [Required]
         public string Name { get; set; }
-
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string? FullName { get; private set; }
         public bool IsDeleted { get; set; }
 
     }

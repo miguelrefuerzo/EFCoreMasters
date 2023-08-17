@@ -13,7 +13,7 @@ namespace InventoryAppEFCore.DataLayer.EfClasses
         [Key]
         public int OrderId { get; set; }
 
-        public DateTime DateOrderedUtc { get; set; }
+        public DateTime DateOrderedUtc { get; private set; }
 
         //relationships
         public ICollection<LineItem> LineItems { get; set; }
