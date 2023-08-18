@@ -4,6 +4,7 @@ using InventoryAppEFCore.DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InventoryAppEFCore.DataLayer.Migrations
 {
     [DbContext(typeof(InventoryAppEfCoreContext))]
-    partial class InventoryAppEfCoreContextModelSnapshot : ModelSnapshot
+    [Migration("20230817111810_client-migration")]
+    partial class clientmigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,54 +47,35 @@ namespace InventoryAppEFCore.DataLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClientId"), 1L, 1);
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasComputedColumnSql("[FirstName] + ' ' + [LastName]", true);
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("ClientId");
 
-                    b.ToTable("Client", (string)null);
+                    b.ToTable("Clients");
 
                     b.HasData(
                         new
                         {
                             ClientId = 1,
-                            FirstName = "Session",
                             IsDeleted = false,
-                            LastName = "8",
                             Name = "Client 1"
                         },
                         new
                         {
                             ClientId = 2,
-                            FirstName = "Session",
                             IsDeleted = false,
-                            LastName = "8",
                             Name = "Client 2"
                         },
                         new
                         {
                             ClientId = 3,
-                            FirstName = "Session",
                             IsDeleted = false,
-                            LastName = "8",
                             Name = "Client 3"
                         });
                 });
@@ -156,9 +139,7 @@ namespace InventoryAppEFCore.DataLayer.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateOrderedUtc")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 6, 28, 0, 0, 0, 0, DateTimeKind.Unspecified));
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
